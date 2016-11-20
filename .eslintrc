@@ -1,0 +1,14 @@
+{
+  "extends": "airbnb",
+  "plugins": [
+    "react",
+    "react-native"
+  ],
+  "globals": {
+    "fetch": true,
+    "__DEV__": true
+  },
+  "rules": {
+    "react/jsx-filename-extension": 0,
+  }
+}

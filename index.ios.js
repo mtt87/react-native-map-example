@@ -5,10 +5,10 @@ import {
   Text,
   View,
   Dimensions,
-  TouchableOpacity,
 } from 'react-native';
 
-import MapView from 'react-native-maps';
+import Map from './src/Map';
+import ToggleButton from './src/ToggleButton';
 
 const { width } = Dimensions.get('window');
 
@@ -21,29 +21,14 @@ const styles = StyleSheet.create({
   welcome: {
     fontSize: 21,
     textAlign: 'center',
-    margin: 10,
-    marginTop: 25,
+    marginBottom: 15,
+    marginTop: 35,
   },
-  map: {
-    height: 350,
-    width: width - 20,
-    borderWidth: 2,
-    borderColor: '#3F51B5',
-  },
-  button: {
-    backgroundColor: '#3F51B5',
-    padding: 15,
-    marginTop: 15,
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 17,
-  }
 });
 
 
 export default class RnTalk extends Component {
-  constructor(){
+  constructor() {
     super();
     this.state = {
       showPins: false,
@@ -55,11 +40,15 @@ export default class RnTalk extends Component {
     const markers = [{
       title: 'THL',
       latlng: {
-        latitude: 51.5216297,
-        longitude: -0.0867828,
+        latitude: 51.519789,
+        longitude: -0.088203,
       },
-      description: 'TechHub 20 Ropemaker Street',
-      image: '',
+    }, {
+      title: 'TH@Campus',
+      latlng: {
+        latitude: 51.522791,
+        longitude: -0.085474,
+      },
     }];
 
     if (this.state.markers.length > 0) {
@@ -78,36 +67,17 @@ export default class RnTalk extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Hello world!
+          Hello TechHub!
         </Text>
-        <MapView
+        <Map
+          width={width - 20}
           style={styles.map}
-          initialRegion={{
-            latitude: 51.5216297,
-            longitude: -0.0867828,
-            latitudeDelta: 0.008,
-            longitudeDelta: 0.008,
-          }}
-          showsPointsOfInterest={false}
-        >
-          {this.state.markers.map(marker => (
-            <MapView.Marker
-              key={marker.title}
-              coordinate={marker.latlng}
-              title={marker.title}
-              description={marker.description}
-            />
-          ))}
-        </MapView>
-        <TouchableOpacity
-          onPress={() => this.toggleTechHub()}
-        >
-          <View style={styles.button}>
-            <Text style={styles.buttonText}>
-              {this.state.showPins ? 'Hide' : 'Show'} TechHub
-            </Text>
-          </View>
-        </TouchableOpacity>
+          markers={this.state.markers}
+        />
+        <ToggleButton
+          toggleTechHub={() => this.toggleTechHub()}
+          showPins={this.state.showPins}
+        />
       </View>
     );
   }
